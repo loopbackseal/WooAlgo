@@ -1,0 +1,44 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>출력결과</title>
+	</head>
+	<body>
+		<form>
+			<input id="police" />
+			<input id="robber" />
+			<button id="submit" type="button">계산</button>
+		</form>
+		<script>
+			const btn = document.getElementById('submit');
+			btn.addEventListener("click", clickHandler);
+			function solution(n, k) {
+				let min = find(n, k);
+				if (find(n - 1, k) < min) min = find(n - 1, k);
+				else if (find(n + 1, k) < min) min = find(n + 1, k);
+				return min;
+			}
+			function find(n, k) {
+				let arr = [1, 3, 9, 27, 81, 243, 729, 2187, 6561, 19683, 59049];
+				let i = 0;
+				while (arr[i] * n <= k) i++;
+				let min = 100001;
+				let tmp;
+				while (i >= 0) {
+					tmp = i;
+					if (k - arr[i] * n >= 0) tmp += k - arr[i] * n;
+					else tmp -= k - arr[i] * n;
+					if (tmp <= min) min = tmp;
+					else break;
+					i--;
+				}
+				return min;
+			}
+			function clickHandler(e) {
+				let n = document.getElementById('police').value;
+				let k = document.getElementById('robber').value;
+				console.log(solution(n,k));
+			}
+		</script>
+	</body>
+</html>
